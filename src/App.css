@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+	display: flex;
 }
 .App-link {
   color: #61dafb;
