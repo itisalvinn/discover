@@ -1,17 +1,18 @@
-import React, {useState} from 'react'
+import React, {useContext} from 'react'
 import './App.css'
 import {Login} from './components/auth/LoginPage'
 import {PlayerContext} from './Context'
 
-// add login page + redirect to main
-// add different moods -- create playlists based on selected mood
-// add some footer thingy later
-// TODO: fix context provider to take in set state thingy
+// TODO: add different moods -- create playlists based on selected mood
+// TODO: add some footer thingy later
+// TODO: fix context later -- using local storage for now 
 
 function App() {
 
+  const playerContext = useContext(PlayerContext)
+
   return (
-    <PlayerContext.Provider value={''}>
+    <PlayerContext.Provider value={playerContext}>
       <div>
         <Login/>
       </div>
