@@ -106,7 +106,6 @@ export const Login = () =>{
                         Login to Spotify
                     </Button>
                 </Container>
- 
             </div>)}
 
             {/* after login */}
