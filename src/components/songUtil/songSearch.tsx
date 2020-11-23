@@ -16,7 +16,3 @@ export const getRandomSearch = () => {
 
     return randSearch;
 }
-
-export const getSongURL = () => {
-
-}

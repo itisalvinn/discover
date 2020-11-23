@@ -21,7 +21,6 @@ const useStyles = makeStyles ({
 
 // can create const items array and map them to a title/img then display them in div card
 // maybe use material ui card for each item thing
-
 export const Grid = () =>{
 
     const [responseData, setResponseData] = useState('');

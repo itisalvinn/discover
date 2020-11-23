@@ -1,5 +1,7 @@
-import React, {useState} from 'react'
-import {Card, makeStyles, CardContent, List, CardHeader, Button} from '@material-ui/core'
+import React, {useState, useEffect} from 'react'
+import {Card, makeStyles, CardContent, List, CardHeader, Button, IconButton} from '@material-ui/core'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import {getRandomSearch} from '../songUtil/songSearch'
 import axios from 'axios';
 
 // fetch a random set of ~ 20 songs
@@ -15,12 +17,18 @@ const useStyles = makeStyles ({
     },
     trackContainer : {
         overflow: 'auto',
+    },
+    album : {
+        width: '100px',
+        height: '100px',
     }
 })
 
 export const PlaylistCard = () => {
     const [responseData, setResponseData] = useState('123');
     const [tracks, setTracks] = useState<string[]>([]);
+    const [imageData, setImageData] = useState('');
+    const [uri, setUri] = useState('');
     const styles =  useStyles();
 
     // test profile method
@@ -39,24 +47,7 @@ export const PlaylistCard = () => {
         });
     }
 
-    // get random tracks by creating search input with randomly chosen character
-    const getRandomSearch = () => {
-        const chars = 'abcdefghijklmnopqrstuvwxyz';
-        const randChar = chars.charAt(Math.floor(Math.random() * chars.length));
-        let randSearch = ''; 
-
-        // off set because Spotify prioritizes more famous artists / tracks 
-        if(Math.round(Math.random()) > 0){
-            randSearch = randChar + '%';
-        } 
-        else{
-            randSearch = '%' + randChar +'%';
-        }
-
-        return randSearch;
-    }
-
-    const getTrack = (token : any) => {
+    const getTrackInfo = (token : any) => {
         axios({
             url: 'https://api.spotify.com/v1/search',
             method: 'GET',
@@ -68,27 +59,46 @@ export const PlaylistCard = () => {
             params: {
                 q: getRandomSearch(),
                 type: 'track',
-                offset: 10,
+                offset: 3, 
+                limit: 1, //get 1 track for now
             }
         })
-        .then(resp => resp.data)
+        .then(resp => {return resp.data})
             .then((data) =>{
                 // data contains tracks, href, next page
-                // items contains up to 20 tracks, each track has album/artist/id/name/
+                // items contains up to '${limit}' tracks, each track has album/artist/id/name/
                 let trackArray:string[] = [];
                 for(let i = 0; i < data.tracks.items.length; i++){
                     trackArray.push(data.tracks.items[i].id + " "); 
                 }
                 setTracks(trackArray);
+                setImageData(data.tracks.items[0].album.images[0].url);
+                setUri(data.tracks.items[0].href);
                 console.log(data.tracks.items);
-        })
+            })
         .catch(err => {
             console.log(err);
         });
     }
 
-    const playTrack = (url: string) => {
+    useEffect(() => {
+        getProfile(access_token);
+        getTrackInfo(access_token);
+    }, [])
 
+    const getAlbumArt = () => {
+
+    }
+
+    // how tf do i play music with dis ?????
+    const playTrack = (uri: any, token: any) => {
+        axios({
+            url: `${uri}`,
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
     }
 
     const access_token = localStorage.getItem('access_token')
@@ -97,14 +107,24 @@ export const PlaylistCard = () => {
         <Card className={styles.card}>
             <CardHeader
                 title="Happy" // place holder, will probably use track or album art
+                action={
+                    <IconButton onClick={()=> getTrackInfo(access_token)} aria-label="refresh-songs">
+                        <RefreshIcon/>
+                    </IconButton>
+                }
             />
             <CardContent>
                 <Button
-                    onClick={() => getTrack(access_token)}
+                    onClick={() => getTrackInfo(access_token)}
                 > testing 123
                 </Button>
+                <Button>
+                    play button
+                </Button>
                 <List className={styles.trackContainer}>
-                    The first 20 tracks are {tracks}
+                    The first tracks is {tracks} <br/>
+                    <img className={styles.album} src={imageData}/> <br/>
+                    Username is {responseData}
                 </List>
             </CardContent>
         </Card>
