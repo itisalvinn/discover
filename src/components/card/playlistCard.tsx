@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {Card, makeStyles, CardContent, List, CardHeader, Button, IconButton} from '@material-ui/core'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import {getRandomSearch} from '../songUtil/songSearch'
@@ -28,8 +28,17 @@ export const PlaylistCard = () => {
     const [responseData, setResponseData] = useState('123');
     const [tracks, setTracks] = useState<string[]>([]);
     const [imageData, setImageData] = useState('');
-    const [uri, setUri] = useState('');
+
+    const [previewUrl, setPreviewUrl] = useState('');
+    const [audioStatus, setAudioStatus] = useState(false);
+    const audioRef = useRef<HTMLMediaElement>(null);
+
     const styles =  useStyles();
+
+    useEffect(() => {
+        getProfile(access_token);
+        getTrackInfo(access_token);
+    }, [])
 
     // test profile method
     const getProfile = (token: any) => {
@@ -61,6 +70,7 @@ export const PlaylistCard = () => {
                 type: 'track',
                 offset: 3, 
                 limit: 1, //get 1 track for now
+                available_market: 'US, JP, HK, CA'
             }
         })
         .then(resp => {return resp.data})
@@ -73,32 +83,38 @@ export const PlaylistCard = () => {
                 }
                 setTracks(trackArray);
                 setImageData(data.tracks.items[0].album.images[0].url);
-                setUri(data.tracks.items[0].href);
+                setPreviewUrl(data.tracks.items[0].preview_url);
                 console.log(data.tracks.items);
             })
         .catch(err => {
             console.log(err);
         });
-    }
+    }   
 
-    useEffect(() => {
-        getProfile(access_token);
-        getTrackInfo(access_token);
-    }, [])
-
-    const getAlbumArt = () => {
-
-    }
-
-    // how tf do i play music with dis ?????
-    const playTrack = (uri: any, token: any) => {
-        axios({
-            url: `${uri}`,
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`
+    // play track preview when hovering over album art
+    const playTrack = () => {
+        try {
+            if(audioRef.current != null){
+                audioRef.current.play();
             }
-        })
+            setAudioStatus(true);
+        }catch(e){
+            console.log(e);
+        }
+        console.log('mouse enter ' + `${audioStatus}`);
+    }
+
+    // pause track 
+    const pauseTrack = () => {
+        try {
+            if(audioRef.current != null){
+                audioRef.current.load();
+            }
+            setAudioStatus(false);
+        }catch(e){
+            console.log(e);
+        }
+        console.log('mouse exit ' + `${audioStatus}`);
     }
 
     const access_token = localStorage.getItem('access_token')
@@ -118,14 +134,14 @@ export const PlaylistCard = () => {
                     onClick={() => getTrackInfo(access_token)}
                 > testing 123
                 </Button>
-                <Button>
-                    play button
-                </Button>
                 <List className={styles.trackContainer}>
                     The first tracks is {tracks} <br/>
-                    <img className={styles.album} src={imageData}/> <br/>
-                    Username is {responseData}
+                    The audio status wrt to mouse thing is {audioStatus}     
                 </List>
+                <div>
+                    <audio ref={audioRef} src={previewUrl}/>
+                    <img className={styles.album} onMouseEnter={()=> playTrack()} onMouseLeave={()=> pauseTrack()} src={imageData}/> <br/>
+                </div>
             </CardContent>
         </Card>
     )
