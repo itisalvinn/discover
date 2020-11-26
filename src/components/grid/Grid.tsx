@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import StackGrid, {transitions} from 'react-stack-grid'
 import {makeStyles, Button} from '@material-ui/core'
-import {PlaylistCard} from '../card/playlistCard'
+import {PlaylistCard} from '../card/PlaylistCard'
 import axios from 'axios';
 import sizeMe from 'react-sizeme'
 

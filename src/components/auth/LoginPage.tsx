@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {makeStyles, Button, Container} from "@material-ui/core"
 import {Grid} from '../grid/Grid'
+import {GridHeader} from '../grid/GridHeader'
 
 const useStyles = makeStyles ({
     loginBase : {
@@ -111,7 +112,7 @@ export const Login = () =>{
             {/* after login */}
             {_token && (<div className={styles.gridBase}>
                 {/* for testing purposes remove after <text> {`the token thing is + ${myToken}`} </text> */}
-                <header> Temp header -- add Logo + name + logout feature </header>
+                <GridHeader/>
                 <Grid/>
             </div>)}
         </div>

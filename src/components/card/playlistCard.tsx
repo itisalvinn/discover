@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {Card, makeStyles, CardContent, List, CardHeader, Button, IconButton} from '@material-ui/core'
 import RefreshIcon from '@material-ui/icons/Refresh'
-import {getRandomSearch} from '../songUtil/songSearch'
+import {getRandomSearch} from '../songUtil/SongSearch'
 import axios from 'axios';
 
 // fetch a random set of ~ 20 songs
@@ -12,8 +12,8 @@ const useStyles = makeStyles ({
     card : {
         display: 'block',
         backgroundColor: '#1DB954',
-        width: '100%',
-        height: '100%',
+        width: '95%',
+        height: '95%',
     },
     trackContainer : {
         overflow: 'auto',
@@ -34,6 +34,7 @@ export const PlaylistCard = () => {
     const audioRef = useRef<HTMLMediaElement>(null);
 
     const styles =  useStyles();
+    const access_token = localStorage.getItem('access_token');
 
     useEffect(() => {
         getProfile(access_token);
@@ -56,6 +57,7 @@ export const PlaylistCard = () => {
         });
     }
 
+    // currently grabs only 1 track -- need to update function to grab 5 tracks and populate them individually in an audio div
     const getTrackInfo = (token : any) => {
         axios({
             url: 'https://api.spotify.com/v1/search',
@@ -68,9 +70,9 @@ export const PlaylistCard = () => {
             params: {
                 q: getRandomSearch(),
                 type: 'track',
-                offset: 3, 
+                offset: 5, 
                 limit: 1, //get 1 track for now
-                available_market: 'US, JP, HK, CA'
+                // available_market: 'US'
             }
         })
         .then(resp => {return resp.data})
@@ -101,11 +103,9 @@ export const PlaylistCard = () => {
         }catch(e){
             console.log(e);
         }
-        console.log('mouse enter ' + `${audioStatus}`);
     }
 
-    // pause track 
-    const pauseTrack = () => {
+    const stopTrack = () => {
         try {
             if(audioRef.current != null){
                 audioRef.current.load();
@@ -114,10 +114,7 @@ export const PlaylistCard = () => {
         }catch(e){
             console.log(e);
         }
-        console.log('mouse exit ' + `${audioStatus}`);
     }
-
-    const access_token = localStorage.getItem('access_token')
 
     return (
         <Card className={styles.card}>
@@ -130,17 +127,13 @@ export const PlaylistCard = () => {
                 }
             />
             <CardContent>
-                <Button
-                    onClick={() => getTrackInfo(access_token)}
-                > testing 123
-                </Button>
                 <List className={styles.trackContainer}>
                     The first tracks is {tracks} <br/>
                     The audio status wrt to mouse thing is {audioStatus}     
                 </List>
                 <div>
                     <audio ref={audioRef} src={previewUrl}/>
-                    <img className={styles.album} onMouseEnter={()=> playTrack()} onMouseLeave={()=> pauseTrack()} src={imageData}/> <br/>
+                    <img className={styles.album} onMouseEnter={()=> playTrack()} onMouseLeave={()=> stopTrack()} src={imageData}/> <br/>
                 </div>
             </CardContent>
         </Card>
