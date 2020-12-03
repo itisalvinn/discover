@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import {Card, makeStyles, CardContent, List, CardHeader, Button, IconButton} from '@material-ui/core'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import {getRandomSearch} from '../songUtil/SongSearch'
-import axios from 'axios';
+import axios from 'axios'
 
 // fetch a random set of ~ 20 songs
 // determine 'mood' of the song based on their key and danceability / energy (?)
@@ -25,7 +25,7 @@ const useStyles = makeStyles ({
 })
 
 export const PlaylistCard = () => {
-    const [responseData, setResponseData] = useState('123');
+
     const [tracks, setTracks] = useState<string[]>([]);
     const [imageData, setImageData] = useState('');
 
@@ -37,25 +37,8 @@ export const PlaylistCard = () => {
     const access_token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        getProfile(access_token);
         getTrackInfo(access_token);
     }, [])
-
-    // test profile method
-    const getProfile = (token: any) => {
-        axios({
-            url: 'https://api.spotify.com/v1/me',
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(resp => resp.data)
-            .then((data) =>{
-                setResponseData(data.display_name);
-                console.log(data.display_name);
-        });
-    }
 
     // currently grabs only 1 track -- need to update function to grab 5 tracks and populate them individually in an audio div
     const getTrackInfo = (token : any) => {
@@ -71,7 +54,7 @@ export const PlaylistCard = () => {
                 q: getRandomSearch(),
                 type: 'track',
                 offset: 5, 
-                limit: 1, //get 1 track for now
+                limit: 2, //get 1 track for now
                 // available_market: 'US'
             }
         })
@@ -89,11 +72,12 @@ export const PlaylistCard = () => {
                 console.log(data.tracks.items);
             })
         .catch(err => {
-            console.log(err);
+            console.log('Error', err);
         });
     }   
 
     // play track preview when hovering over album art
+    // bug on refresh button -- will automatically play the song
     const playTrack = () => {
         try {
             if(audioRef.current != null){
@@ -101,7 +85,7 @@ export const PlaylistCard = () => {
             }
             setAudioStatus(true);
         }catch(e){
-            console.log(e);
+            console.log("error", e);
         }
     }
 
@@ -112,7 +96,7 @@ export const PlaylistCard = () => {
             }
             setAudioStatus(false);
         }catch(e){
-            console.log(e);
+            console.log("error", e);
         }
     }
 
@@ -128,8 +112,10 @@ export const PlaylistCard = () => {
             />
             <CardContent>
                 <List className={styles.trackContainer}>
-                    The first tracks is {tracks} <br/>
-                    The audio status wrt to mouse thing is {audioStatus}     
+                    {tracks.map((res: string, key) =>
+                        <text className={`track-${key}`}>track id = {res}<br/> </text> 
+                    )}
+                    array thing is {tracks}  
                 </List>
                 <div>
                     <audio ref={audioRef} src={previewUrl}/>

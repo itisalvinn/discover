@@ -1,5 +1,6 @@
 import React from 'react'
-import {makeStyles} from '@material-ui/core'
+import {makeStyles, IconButton} from '@material-ui/core'
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles ({
     pageHeader : {
@@ -44,6 +45,9 @@ export const GridHeader = () => {
             {/* right side drop down -> clear cache / log out of spotify */}
             <div className={styles.pageHeaderRight}>
                 page header right side
+                <IconButton>
+                    <SettingsIcon/>
+                </IconButton>
             </div>
         </div>
     )

@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import StackGrid, {transitions} from 'react-stack-grid'
 import {makeStyles, Button} from '@material-ui/core'
 import {PlaylistCard} from '../card/PlaylistCard'
+import {HappyCard} from '../card/HappyCard'
 import axios from 'axios';
-import sizeMe from 'react-sizeme'
 
 const useStyles = makeStyles ({
     base : {
@@ -21,7 +21,7 @@ const useStyles = makeStyles ({
 
 // can create const items array and map them to a title/img then display them in div card
 // maybe use material ui card for each item thing
-export const Grid = () =>{
+export const Grid = () => {
 
     const [responseData, setResponseData] = useState('');
     const styles = useStyles(); 
@@ -56,7 +56,7 @@ export const Grid = () =>{
                 <div key="key1" className={styles.item}><PlaylistCard/></div>
                 <div key="key2" className={styles.item}><PlaylistCard/></div>
                 <div key="key3" className={styles.item}><PlaylistCard/></div>
-                <div key="key4" className={styles.item}><PlaylistCard/></div>
+                <div key="key4" className={styles.item}><HappyCard/></div>
             </StackGrid>
             {/* <StackGrid
                 columnWidth="25%"
