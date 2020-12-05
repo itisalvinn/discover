@@ -111,7 +111,6 @@ export const Login = () =>{
 
             {/* after login */}
             {_token && (<div className={styles.gridBase}>
-                {/* for testing purposes remove after <text> {`the token thing is + ${myToken}`} </text> */}
                 <GridHeader/>
                 <Grid/>
             </div>)}

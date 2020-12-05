@@ -4,9 +4,7 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import {getRandomSearch} from '../songUtil/SongSearch'
 import axios from 'axios'
 
-// fetch a random set of ~ 20 songs
-// determine 'mood' of the song based on their key and danceability / energy (?)
-// also consider Valence (musical positiveness)
+// maybe have a mood parameter for playlistCard -- PlaylistCard = (mood: string) -- then pass this into search 
 
 const useStyles = makeStyles ({
     card : {
@@ -55,7 +53,7 @@ export const PlaylistCard = () => {
                 type: 'track',
                 offset: 5, 
                 limit: 2, //get 1 track for now
-                // available_market: 'US'
+                available_market: 'US'
             }
         })
         .then(resp => {return resp.data})

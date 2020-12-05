@@ -29,8 +29,7 @@ const useStyles = makeStyles ({
     pageHeaderRight : {
         color: '#fff',
         float: 'right',
-        marginTop: '15px',
-        marginRight: '20px',
+        marginInLineEnd: '5px',
     }
 })
 

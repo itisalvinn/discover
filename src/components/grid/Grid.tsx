@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import StackGrid, {transitions} from 'react-stack-grid'
+import StackGrid from 'react-stack-grid'
 import {makeStyles, Button} from '@material-ui/core'
 import {PlaylistCard} from '../card/PlaylistCard'
 import {HappyCard} from '../card/HappyCard'
@@ -16,6 +16,7 @@ const useStyles = makeStyles ({
     item : {
         margin: '10 10',
         color: '#FFFFF',
+        height: '30%',
     }
 })
 
@@ -69,13 +70,6 @@ export const Grid = () => {
                 <div key="key3"><PlaylistCard/></div>
                 <div key="key4"><PlaylistCard/></div>
             </StackGrid> */}
-            <Button 
-                    onClick={() => getUserProfile(access_token)}
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                > Check profile stuff thing in logs
-            </Button>
         </div>
 
     )
