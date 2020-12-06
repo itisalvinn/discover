@@ -10,7 +10,7 @@ const useStyles = makeStyles ({
         width: '100%',
         position: 'fixed',
         alignItems: 'normal',
-        margin: 0,
+        margin: '0 auto',
     },
     gridBase : {
         // todo: update colours
@@ -18,6 +18,7 @@ const useStyles = makeStyles ({
         minHeight: '100%',
         width: '100%',
         position: 'fixed',
+        overflowY: 'auto',
     },
     content : {
         width: '50%',

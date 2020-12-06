@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import StackGrid from 'react-stack-grid'
 import {makeStyles, Button} from '@material-ui/core'
 import {PlaylistCard} from '../card/PlaylistCard'
-import {HappyCard} from '../card/HappyCard'
+import {MoodCard} from '../card/MoodCard'
 import axios from 'axios';
 
 const useStyles = makeStyles ({
@@ -45,6 +45,9 @@ export const Grid = () => {
 
     const access_token = localStorage.getItem('access_token');
 
+    let happyQuery = ["happy", "feel good", "uplifting"];
+    let sadQuery = ["sad", "down"];
+
     return(
         <div className={styles.base}>
             <StackGrid
@@ -57,7 +60,7 @@ export const Grid = () => {
                 <div key="key1" className={styles.item}><PlaylistCard/></div>
                 <div key="key2" className={styles.item}><PlaylistCard/></div>
                 <div key="key3" className={styles.item}><PlaylistCard/></div>
-                <div key="key4" className={styles.item}><HappyCard/></div>
+                <div key="key4" className={styles.item}><MoodCard mood={happyQuery} /></div>
             </StackGrid>
             {/* <StackGrid
                 columnWidth="25%"
