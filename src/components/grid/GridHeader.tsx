@@ -1,6 +1,9 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {makeStyles, IconButton} from '@material-ui/core'
 import SettingsIcon from '@material-ui/icons/Settings';
+import axios from 'axios'
+
+// add option for coffee shop noises / rain / thunder with volume slider !!
 
 const useStyles = makeStyles ({
     pageHeader : {
@@ -12,7 +15,7 @@ const useStyles = makeStyles ({
         color: '#fff',
         margin: '0px 90px 10px',
         fontSize: '2.5em',
-        width: '70%',
+        width: '80%',
         zIndex: 10,
     },
     logo : {
@@ -29,21 +32,51 @@ const useStyles = makeStyles ({
     pageHeaderRight : {
         color: '#fff',
         float: 'right',
-        marginInLineEnd: '5px',
+        alignSelf: 'flex-end',
     }
 })
 
-export const GridHeader = () => {
-    const styles = useStyles();
 
+export const GridHeader = () => {
+    
+    const [displayName, setDisplayName] = useState('');
+    const styles = useStyles();
+    const access_token = localStorage.getItem('access_token');
+
+    useEffect(()=>{
+        getProfile(access_token);
+    })
+
+    // profile deets
+    const getProfile = (token: any) => {
+        axios({
+            url: 'https://api.spotify.com/v1/me',
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(resp => resp.data)
+            .then((data) =>{
+                setDisplayName(data.display_name);
+        });
+    }
+
+    const refreshSession = () => {
+        localStorage.removeItem('access_token');
+        window.location.reload(false);
+    }
+
+    const logout = () => {
+        // TODO later
+    }
     return (
         <div className={styles.pageHeader}>
-            {/* can either have div logo or just replace the entire logo + page title with img */}
             <div className={styles.logo}></div> 
             <h1 className={styles.pageTitle}>Mood</h1>
             {/* right side drop down -> clear cache / log out of spotify */}
             <div className={styles.pageHeaderRight}>
-                page header right side
+                <span className="username">{`${displayName}`}</span>
                 <IconButton>
                     <SettingsIcon/>
                 </IconButton>

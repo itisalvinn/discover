@@ -10,7 +10,8 @@ const useStyles = makeStyles({
         '&:hover': {
             width: '105px',
             height: '105px',
-        }
+        },
+        cursor: 'pointer',
     },
     itemDiv : {
         display: 'flex',
@@ -56,12 +57,20 @@ export const PlaylistItem = ({data} : {data: any}) => {
         }
     }
 
+    const openTrack = () => {
+        const navigateToTrackUrl = window.open(data.trackUrl, '_blank', 'noopener,noreferrer');
+        // reset the opener when user can successfully navigate to new tab
+        if(navigateToTrackUrl) {
+            navigateToTrackUrl.opener = null;
+        }
+    }
+
     return (
         // want to display album art, song title, artist -- data.art, data.title, data.artist, data.previewUrl
         <div className={styles.itemDiv}>
             <audio ref={audioRef} src={data.pUrl}/>
             <div className={styles.artDiv}>
-                <img className={styles.album} onMouseEnter={()=> playTrack()} onMouseLeave={()=> stopTrack()} src={data.albumArt}/>
+                <img className={styles.album} onMouseEnter={()=> playTrack()} onMouseLeave={()=> stopTrack()} onClick={()=> openTrack()}src={data.albumArt}/>
             </div>
             <div className={styles.infoDiv}>
                 <h4 className={styles.trackHeader}>{data.name}</h4>

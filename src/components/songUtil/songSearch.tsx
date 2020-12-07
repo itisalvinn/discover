@@ -22,7 +22,7 @@ export const randomIndex = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-// grab results for maybe 5 to 10 songs - return an array of song items?
+// search for some random input {track, playlist, artist etc.}
 export const getSearchResults = (token: any) => {
     const response = axios({
         url: 'https://api.spotify.com/v1/search',
@@ -55,7 +55,7 @@ export const getSearchResults = (token: any) => {
 }
 
 
-// grab results for 10 songs given mood parameter
+// grab results for 10 playlists given a specific mood input
 export const getSearchResultsMood = (token: any, mood: string) => {
     const response = axios({
         url: 'https://api.spotify.com/v1/search',
@@ -68,7 +68,7 @@ export const getSearchResultsMood = (token: any, mood: string) => {
         params: {
             q: mood,
             type: 'playlist',
-            offset: randomIndex(0,15),  // fix offset
+            offset: randomIndex(0,8),  // fix offset
             limit: 10,
             available_market: 'US'
         }
@@ -87,18 +87,30 @@ export const getSearchResultsMood = (token: any, mood: string) => {
     return response;
 }
 
-// profile deets
-export const getProfile = (token: any) => {
+// add a 'happy' song into list of happy songs based on their audio features
+// (token: any, track: trackData)
+// WIP come back to this later
+const getHappyFeatures = (token: any) => {
     axios({
-        url: 'https://api.spotify.com/v1/me',
+        url: 'https://api.spotify.com/v1/audio-features/' + 'place holder id',
         method: 'GET',
         headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
+        },
+    })
+    .then(resp => {return resp.data})
+        .then(data => {
+        console.log("features");
+        console.log(data);
+        if(data.tempo > 99 && data.mode == 1) {
+            console.log("happy song");
+            console.log(data.id);
+            // setHappySongs([...happySongs, data.id]);
         }
     })
-    .then(resp => resp.data)
-        .then((data) =>{
-            console.log(data.display_name);
-            // setResponse(data.display_name);
+    .catch(err => {
+        console.log('Error', err);
     });
 }

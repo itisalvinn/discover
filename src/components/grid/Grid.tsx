@@ -1,9 +1,11 @@
-import React, {useState} from 'react'
+import React from 'react'
 import StackGrid from 'react-stack-grid'
-import {makeStyles, Button} from '@material-ui/core'
-import {PlaylistCard} from '../card/PlaylistCard'
+import {makeStyles} from '@material-ui/core'
 import {MoodCard} from '../card/MoodCard'
-import axios from 'axios';
+
+// redesign grid to use hexagons / diamonds?
+// on hover, border glow
+// use darker colour scheme 
 
 const useStyles = makeStyles ({
     base : {
@@ -20,59 +22,42 @@ const useStyles = makeStyles ({
     }
 })
 
-// can create const items array and map them to a title/img then display them in div card
-// maybe use material ui card for each item thing
 export const Grid = () => {
 
-    const [responseData, setResponseData] = useState('');
     const styles = useStyles(); 
 
-    // remove later -- test method to get base spotify profile info
-    const getUserProfile = (token: any) => {
-        axios({
-            url: 'https://api.spotify.com/v1/me',
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(resp => resp.data)
-            .then((data) =>{
-                setResponseData(data.display_name);
-                console.log(data.display_name);
-        });
-    }
-
-    const access_token = localStorage.getItem('access_token');
-
-    let happyQuery = ["happy", "feel good", "uplifting"];
-    let sadQuery = ["sad", "down"];
+    let happyQuery = ["Happy", "feel good", "happiness", "celebration"];
+    let sadQuery = ["Sad", "crying", "melancholy", "sorrow"];
+    let peaceQuery = ["Peaceful", "peace", "quiet", "calming", "piano"];
+    let hypeQuery = ["Motivated", "hype", "energetic"];
+    let btsQuery = ["BTS", "map of the soul"];
+    let kpopQuery = ["Kpop", "top 20 kpop"];
 
     return(
         <div className={styles.base}>
+            <StackGrid
+                columnWidth="25%"
+                gutterWidth={20}
+                gutterHeight={10}
+                className={styles.grid}
+            >
+                {/* Happy, Sad, Motivated, Mellow, Peace -- display card on click, maybe include some animations */}
+                <div key="key1" className={styles.item}><MoodCard mood={happyQuery} /></div>
+                <div key="key2" className={styles.item}><MoodCard mood={sadQuery}/></div>
+                <div key="key3" className={styles.item}><MoodCard mood={peaceQuery}/></div>
+                <div key="key4" className={styles.item}><MoodCard mood={hypeQuery}/></div>
+            </StackGrid>
             <StackGrid
                 columnWidth="25%"
                 gutterWidth={25}
                 gutterHeight={10}
                 className={styles.grid}
             >
-                {/* Happy, Sad, Motivated, Mellow, Peace -- display card on click, maybe include some animations */}
-                <div key="key1" className={styles.item}><PlaylistCard/></div>
-                <div key="key2" className={styles.item}><PlaylistCard/></div>
-                <div key="key3" className={styles.item}><PlaylistCard/></div>
-                <div key="key4" className={styles.item}><MoodCard mood={happyQuery} /></div>
+                <div key="key1"><MoodCard mood={btsQuery} /></div>
+                <div key="key2"><MoodCard mood={happyQuery} /></div>
+                <div key="key3"><MoodCard mood={kpopQuery} /></div>
+                <div key="key4"><MoodCard mood={happyQuery} /></div>
             </StackGrid>
-            {/* <StackGrid
-                columnWidth="25%"
-                gutterWidth={25}
-                gutterHeight={10}
-                className={styles.grid}
-            >
-                <div key="key1"><PlaylistCard/></div>
-                <div key="key2"><PlaylistCard/></div>
-                <div key="key3"><PlaylistCard/></div>
-                <div key="key4"><PlaylistCard/></div>
-            </StackGrid> */}
         </div>
 
     )

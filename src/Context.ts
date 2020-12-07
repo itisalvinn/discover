@@ -6,6 +6,7 @@ export type trackData = {
     name: string,
     albumArt: string,
     artist: string,
+    trackUrl: string,
 }
 
 // data from https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/

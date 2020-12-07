@@ -1,19 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import {PlaylistItem} from './PlaylistItem'
-import {getSearchResults, getSearchResultsMood, randomIndex} from '../songUtil/SongSearch'
-import {Card, Button, makeStyles, CardHeader, IconButton, CardContent, CardMedia, Typography} from '@material-ui/core'
+import {getSearchResultsMood, randomIndex} from '../songUtil/SongSearch'
+import {Card, makeStyles, CardHeader, IconButton, CardContent, Tooltip} from '@material-ui/core'
 import {trackData} from '../../Context'
 import RefreshIcon from '@material-ui/icons/Refresh'
+import AddIcon from '@material-ui/icons/Add'
+import OpenInNewIcon from '@material-ui/icons/OpenInNew'
 import axios from 'axios'
 
 //TODO: update card and content UI - need dis to look SECKSI
+//TODO: set 'loading' view when api is still retrieving the value so card content doesn't appear blank
+//TODO: fix follow + navigate to playlist btns
+//TODO: add transparent scroll bar
+// test playlist ID = 3AhUYjFT0tcC4sOJFhIkgP
 
 const useStyles = makeStyles({
     card : {
         display: 'block',
-        backgroundColor: '#1DB954',
+        backgroundColor: '#c9ada7',
         width: '95%',
-        height: '400px',
+        height: '410px',
     },
     cardHeader : {
         borderBottom:  '3px solid',
@@ -21,59 +27,57 @@ const useStyles = makeStyles({
     },
     scrollDiv : {
         width: "100%",
-        height: '275px',
+        height: '260px',
         overflowY: 'scroll',
+    },
+    addToPlaylist : {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: '5px',
+        marginBottom: '5px',
+    },
+    openPlaylistBtn : {
+        backgroundColor: '#f2e9e4',
+        marginRight: '3px',
+        marginLeft: '3px',
+        '&:hover': {
+            
+        },
+    },
+    followPlaylistBtn : {
+        backgroundColor: '#f2e9e4',
+        marginRight: '3px',
+        marginLeft: '3px',
+    },
+    openBtnDescription : {
+        visibility: 'hidden',
+    },
+    followBtnDescription : {
+        visibility: 'hidden',
     }
 })
 
 export const MoodCard = ({mood} : {mood : string[]}) => {
 
     const [songData, setSongData] = useState<trackData[]>([]);
-    const [happySongs, setHappySongs] = useState<string[]>([]);
-
+    const [currPlaylistId, setCurrPlaylistId] = useState('');
     const styles =  useStyles();
     const access_token = localStorage.getItem('access_token');
+    var searchResults: any = [];
 
     useEffect(() => {
         // retrieve list of playlist from promise and add 10 random tracks from a randomly selected playlist
-    getSearchResultsMood(access_token, mood[randomIndex(0,mood.length)]).then(result => {
-            console.log(result);
+        getSearchResultsMood(access_token, mood[randomIndex(0,mood.length)]).then(result => {
             let idx = randomIndex(0, result.length);
             getRandomTracksFromPlaylist(access_token, result[idx].id);
-            console.log(result[idx]);
+            setCurrPlaylistId(result[idx].id);
         })
     }, [])
 
-    var searchResults: any = [];
-
     const loopOver = () => {
         getRandomTracksFromPlaylist(access_token, '3AhUYjFT0tcC4sOJFhIkgP');
-    }
-
-    // add a 'happy' song into list of happy songs based on their audio features
-    const getHappyFeatures = (token: any, track: trackData) => {
-        axios({
-            url: 'https://api.spotify.com/v1/audio-features/' + track.id,
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        })
-        .then(resp => {return resp.data})
-            .then(data => {
-            console.log("features");
-            console.log(data);
-            if(data.tempo > 99 && data.mode == 1) {
-                console.log("happy song");
-                console.log(data.id);
-                setHappySongs([...happySongs, data.id]);
-            }
-        })
-        .catch(err => {
-            console.log('Error', err);
-        });
     }
 
     /* add random tracks into state from a playlist
@@ -92,7 +96,7 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
         })
         .then(resp => {return resp.data.items})
             .then(data => {
-                let happySongIds = new Set();
+                let happySongIds = new Set(); 
                 for(let i = 0; i < data.length; i++){
                     let idx = randomIndex(0, data.length);
                     // add song into set given it is not 'full' and preview url exists
@@ -105,6 +109,7 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
                             name: data[idx].track.name,
                             albumArt: data[idx].track.album.images[0].url,
                             artist: data[idx].track.artists[0].name,
+                            trackUrl: data[idx].track.external_urls.spotify,
                         })
                     }
                     // console.log(data[idx].track);
@@ -117,10 +122,34 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
         });
     }
 
+    const openPlaylist = (playlistId : string) => {
+        let playlistUrl = 'https://open.spotify.com/playlist/' + playlistId;
+        const navigateToTrackUrl = window.open(playlistUrl, '_blank', 'noopener,noreferrer');
+        // reset the opener when user can successfully navigate to new tab
+        if(navigateToTrackUrl) {
+            navigateToTrackUrl.opener = null;
+        }
+    }
+
+    const followPlaylist = (token : any, playlistId : string) => {
+        axios({
+            url: 'https://api.spotify.com/v1/playlists/' + playlistId + '/followers',
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            data: {
+                'public' : false,
+            }
+        })
+    }
+
     return (
         <Card className={styles.card}>
             <CardHeader
-                title="Placeholder" // place holder, will probably use track or album art
+                title={mood[0]}
                 className={styles.cardHeader}
                 action={
                     <IconButton onClick={()=>loopOver()} aria-label="refresh-songs">
@@ -130,15 +159,22 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
             />
             <CardContent>
                 <div className={styles.scrollDiv}>
-                    {songData.map((res: trackData, key) =>
-                        <PlaylistItem data={res}/>
+                    {songData.map((track: trackData, key) =>
+                        <PlaylistItem data={track}/> 
                     )}
-                <Button onClick={()=> loopOver()}>
-                    yo
-                </Button>
                 </div>
-                <div>
-                    helo hello
+                <div className={styles.addToPlaylist}>
+                    <Tooltip title="Open complete playlist on Spotify">
+                        <IconButton className={styles.openPlaylistBtn} size="medium">
+                            <OpenInNewIcon onClick={()=> openPlaylist(currPlaylistId)}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Follow this playlist">
+                        <IconButton className={styles.followPlaylistBtn} size="medium">
+                            {/* add button transform into a checkmark or something when followed -- some indicator that this happened */}
+                            <AddIcon onClick={() => followPlaylist(access_token, currPlaylistId)}/>
+                        </IconButton>
+                    </Tooltip>
                 </div>
             </CardContent>
         </Card>

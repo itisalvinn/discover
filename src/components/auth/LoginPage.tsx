@@ -15,10 +15,10 @@ const useStyles = makeStyles ({
     gridBase : {
         // todo: update colours
         backgroundColor: '#333246',
-        minHeight: '100%',
+        height: '100%',
         width: '100%',
         position: 'fixed',
-        overflowY: 'auto',
+        overflowY: 'scroll',
     },
     content : {
         width: '50%',
@@ -61,6 +61,8 @@ const scopes = [
   'streaming',
   'user-read-currently-playing',
   'user-read-email',
+  'playlist-modify-public',
+  'playlist-modify-private',
 ];
 
 // get spotify hash
@@ -114,6 +116,13 @@ export const Login = () =>{
             {_token && (<div className={styles.gridBase}>
                 <GridHeader/>
                 <Grid/>
+                <div>
+                    HELLO HELLO <br/>
+                    HELLO HELLO <br/>
+                    HELLO HELLO <br/>
+                    HELLO HELLO <br/>
+                    HELLO HELLO <br/>
+                    </div>
             </div>)}
         </div>
     )
