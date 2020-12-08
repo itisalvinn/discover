@@ -97,7 +97,7 @@ export const Login = () =>{
                         Mood
                     </header>
                     <header className={styles.subheader}>
-                        music for the moment
+                        discover music for the moment
                     </header>
                     {/* <header className={styles.me}>
                         smol project by Alvin
@@ -116,13 +116,6 @@ export const Login = () =>{
             {_token && (<div className={styles.gridBase}>
                 <GridHeader/>
                 <Grid/>
-                <div>
-                    HELLO HELLO <br/>
-                    HELLO HELLO <br/>
-                    HELLO HELLO <br/>
-                    HELLO HELLO <br/>
-                    HELLO HELLO <br/>
-                    </div>
             </div>)}
         </div>
     )

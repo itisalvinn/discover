@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-export const getRandomSearch = () => {
+export const getRandomParam = () => {
     const chars = 'abcdefghijklmnopqrstuvwxyz';
     const randChar = chars.charAt(Math.floor(Math.random() * chars.length));
     let randSearch = ''; 
@@ -18,6 +18,7 @@ export const getRandomSearch = () => {
     return randSearch;
 }
 
+// random number from min up to (but not equal to) max
 export const randomIndex = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min) + min);
 }
@@ -33,16 +34,15 @@ export const getSearchResults = (token: any) => {
             'Authorization': `Bearer ${token}`
         },
         params: {
-            q: getRandomSearch(),
+            q: getRandomParam(),
             type: 'track',
             offset: 5, 
-            limit: 10, //get 1 track for now
+            limit: 10,
             available_market: 'US'
         }
     })
     .then(resp => {return resp.data})
         .then((data) =>{
-
             // return an array of song items
             console.log("items");
             console.log(data.tracks.items);
@@ -75,10 +75,9 @@ export const getSearchResultsMood = (token: any, mood: string) => {
     })
     .then(resp => {return resp.data})
         .then((data) =>{
-
             // return an array of song items
-            console.log("items");
-            console.log(data.playlists.items);
+            // console.log("items");
+            // console.log(data.playlists.items);
             return data.playlists.items;
         })
     .catch(err => {

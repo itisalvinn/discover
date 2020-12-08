@@ -31,7 +31,10 @@ export const Grid = () => {
     let peaceQuery = ["Peaceful", "peace", "quiet", "calming", "piano"];
     let hypeQuery = ["Motivated", "hype", "energetic"];
     let btsQuery = ["BTS", "map of the soul"];
-    let kpopQuery = ["Kpop", "top 20 kpop"];
+    let kpopQuery = ["Kpop", "top 20 kpop", "kpop for the soul"];
+    let lofiQuery = ["Lofi", "lofi", "lofi hip hop", "lofi beats"];
+    let animeQuery = ["Tokyo", "anime", "anime ost", "jpop"];
+    let angryQuery = ["Angry", "upset", "Angry breakup", "mad"];
 
     return(
         <div className={styles.base}>
@@ -41,7 +44,6 @@ export const Grid = () => {
                 gutterHeight={10}
                 className={styles.grid}
             >
-                {/* Happy, Sad, Motivated, Mellow, Peace -- display card on click, maybe include some animations */}
                 <div key="key1" className={styles.item}><MoodCard mood={happyQuery} /></div>
                 <div key="key2" className={styles.item}><MoodCard mood={sadQuery}/></div>
                 <div key="key3" className={styles.item}><MoodCard mood={peaceQuery}/></div>
@@ -54,10 +56,21 @@ export const Grid = () => {
                 className={styles.grid}
             >
                 <div key="key1"><MoodCard mood={btsQuery} /></div>
-                <div key="key2"><MoodCard mood={happyQuery} /></div>
+                <div key="key2"><MoodCard mood={lofiQuery} /></div>
                 <div key="key3"><MoodCard mood={kpopQuery} /></div>
-                <div key="key4"><MoodCard mood={happyQuery} /></div>
+                <div key="key4"><MoodCard mood={angryQuery} /></div>
             </StackGrid>
+            {/* <StackGrid
+                columnWidth="25%"
+                gutterWidth={25}
+                gutterHeight={10}
+                className={styles.grid}
+            >
+                <div key="key1"><MoodCard mood={btsQuery} /></div>
+                <div key="key2"><MoodCard mood={lofiQuery} /></div>
+                <div key="key3"><MoodCard mood={kpopQuery} /></div>
+                <div key="key4"><MoodCard mood={animeQuery} /></div>
+            </StackGrid> */}
         </div>
 
     )

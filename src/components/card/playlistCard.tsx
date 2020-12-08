@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {Card, makeStyles, CardContent, List, CardHeader, Button, IconButton} from '@material-ui/core'
 import RefreshIcon from '@material-ui/icons/Refresh'
-import {getRandomSearch} from '../songUtil/SongSearch'
+import {getRandomParam} from '../songUtil/SongSearch'
 import axios from 'axios'
 
 // maybe have a mood parameter for playlistCard -- PlaylistCard = (mood: string) -- then pass this into search 
@@ -49,7 +49,7 @@ export const PlaylistCard = () => {
                 'Authorization': `Bearer ${token}`
             },
             params: {
-                q: getRandomSearch(),
+                q: getRandomParam(),
                 type: 'track',
                 offset: 5, 
                 limit: 2, //get 1 track for now

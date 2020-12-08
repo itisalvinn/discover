@@ -16,6 +16,8 @@ const useStyles = makeStyles({
     itemDiv : {
         display: 'flex',
         padding: '0.5rem',
+        borderBottom:  '1px solid',
+        borderBottomColor: '#000000',
     },
     artDiv : {
         gridColumn: 1/3,
@@ -27,7 +29,7 @@ const useStyles = makeStyles({
         lineHeight: '1em',
         margin: '0 0 0.6em',
         fontWeight: 500,
-    }
+    },
 })
 export const PlaylistItem = ({data} : {data: any}) => {
 

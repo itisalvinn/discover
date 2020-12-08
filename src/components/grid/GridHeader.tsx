@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react'
-import {makeStyles, IconButton} from '@material-ui/core'
+import React, {useState, useEffect, useRef} from 'react'
+import {makeStyles, IconButton, Menu, MenuItem} from '@material-ui/core'
 import SettingsIcon from '@material-ui/icons/Settings';
 import axios from 'axios'
 
 // add option for coffee shop noises / rain / thunder with volume slider !!
+// create a sticky header
+// need to further style settings menu drop down (put it under the button and make it less chunky)
 
 const useStyles = makeStyles ({
     pageHeader : {
@@ -36,10 +38,11 @@ const useStyles = makeStyles ({
     }
 })
 
-
 export const GridHeader = () => {
     
     const [displayName, setDisplayName] = useState('');
+    const [anchorEl, setAnchorEl] = useState<any>(null);
+
     const styles = useStyles();
     const access_token = localStorage.getItem('access_token');
 
@@ -62,24 +65,43 @@ export const GridHeader = () => {
         });
     }
 
+    const handleClick = (event : any) => {
+        setAnchorEl(event.currentTarget);
+    }
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    }
+
     const refreshSession = () => {
         localStorage.removeItem('access_token');
         window.location.reload(false);
     }
-
+ 
     const logout = () => {
         // TODO later
+        alert('logged out!');
     }
+
     return (
         <div className={styles.pageHeader}>
             <div className={styles.logo}></div> 
             <h1 className={styles.pageTitle}>Mood</h1>
-            {/* right side drop down -> clear cache / log out of spotify */}
             <div className={styles.pageHeaderRight}>
                 <span className="username">{`${displayName}`}</span>
-                <IconButton>
+                <IconButton aria-controls="dropdown-menu" onClick={handleClick}>
                     <SettingsIcon/>
                 </IconButton>
+                <Menu
+                    id="dropdown-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                >
+                    <MenuItem onClick={refreshSession}> Restart session </MenuItem>
+                    <MenuItem onClick={logout}> Logout of Spotify </MenuItem>
+                </Menu>
             </div>
         </div>
     )

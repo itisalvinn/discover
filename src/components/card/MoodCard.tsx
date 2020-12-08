@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {PlaylistItem} from './PlaylistItem'
 import {getSearchResultsMood, randomIndex} from '../songUtil/SongSearch'
-import {Card, makeStyles, CardHeader, IconButton, CardContent, Tooltip} from '@material-ui/core'
+import {Card, makeStyles, CardHeader, IconButton, CardContent, Tooltip, Typography} from '@material-ui/core'
 import {trackData} from '../../Context'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import AddIcon from '@material-ui/icons/Add'
@@ -10,7 +10,6 @@ import axios from 'axios'
 
 //TODO: update card and content UI - need dis to look SECKSI
 //TODO: set 'loading' view when api is still retrieving the value so card content doesn't appear blank
-//TODO: fix follow + navigate to playlist btns
 //TODO: add transparent scroll bar
 // test playlist ID = 3AhUYjFT0tcC4sOJFhIkgP
 
@@ -25,10 +24,27 @@ const useStyles = makeStyles({
         borderBottom:  '3px solid',
         borderBottomColor: '#333246',
     },
+    headerDescription : {
+        color: 'red',
+    },
     scrollDiv : {
         width: "100%",
         height: '260px',
         overflowY: 'scroll',
+        '&::-webkit-scrollbar': {
+            width: '0.4em'
+        },
+        '&:hover': {
+            '&::-webkit-scrollbar-track': {
+                // '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
+                backgroundColor: 'rgba(0,0,0,.1)',
+                transition: 'opacity 0.5s 0.5s',
+                opacity: 1,
+            },
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(0,0,0,.1)',
+        }
     },
     addToPlaylist : {
         display: 'flex',
@@ -42,21 +58,12 @@ const useStyles = makeStyles({
         backgroundColor: '#f2e9e4',
         marginRight: '3px',
         marginLeft: '3px',
-        '&:hover': {
-            
-        },
     },
     followPlaylistBtn : {
         backgroundColor: '#f2e9e4',
         marginRight: '3px',
         marginLeft: '3px',
     },
-    openBtnDescription : {
-        visibility: 'hidden',
-    },
-    followBtnDescription : {
-        visibility: 'hidden',
-    }
 })
 
 export const MoodCard = ({mood} : {mood : string[]}) => {
@@ -97,7 +104,7 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
         .then(resp => {return resp.data.items})
             .then(data => {
                 let happySongIds = new Set(); 
-                for(let i = 0; i < data.length; i++){
+                for(let i = 0; i < data.length-1; i++){
                     let idx = randomIndex(0, data.length);
                     // add song into set given it is not 'full' and preview url exists
                     // b/c we don't want the user to get an empty playback
@@ -112,8 +119,6 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
                             trackUrl: data[idx].track.external_urls.spotify,
                         })
                     }
-                    // console.log(data[idx].track);
-                    // console.log(data[idx].track.preview_url);
                 }
                 setSongData(searchResults);
             })
