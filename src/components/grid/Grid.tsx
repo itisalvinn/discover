@@ -29,7 +29,7 @@ export const Grid = () => {
     let happyQuery = ["Happy", "feel good", "happiness", "celebration"];
     let sadQuery = ["Sad", "crying", "melancholy", "sorrow"];
     let peaceQuery = ["Peaceful", "peace", "quiet", "calming", "piano"];
-    let hypeQuery = ["Motivated", "hype", "energetic"];
+    let hypeQuery = ["Motivated", "hype", "high energy", "pumped up"];
     let btsQuery = ["BTS", "map of the soul"];
     let kpopQuery = ["Kpop", "top 20 kpop", "kpop for the soul"];
     let lofiQuery = ["Lofi", "lofi", "lofi hip hop", "lofi beats"];

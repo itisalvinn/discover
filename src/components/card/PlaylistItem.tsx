@@ -1,6 +1,5 @@
 import React, {useState, useRef} from 'react'
-import {Button, makeStyles} from '@material-ui/core'
-import { FullscreenExit } from '@material-ui/icons';
+import {makeStyles} from '@material-ui/core'
 
 const useStyles = makeStyles({
     album : {

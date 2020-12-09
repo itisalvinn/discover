@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect} from 'react'
 import {makeStyles, IconButton, Menu, MenuItem} from '@material-ui/core'
 import SettingsIcon from '@material-ui/icons/Settings';
 import axios from 'axios'
@@ -48,7 +48,7 @@ export const GridHeader = () => {
 
     useEffect(()=>{
         getProfile(access_token);
-    })
+    },[])
 
     // profile deets
     const getProfile = (token: any) => {
@@ -99,6 +99,7 @@ export const GridHeader = () => {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                 >
+                    {/* TODO: update dropdown styling */}
                     <MenuItem onClick={refreshSession}> Restart session </MenuItem>
                     <MenuItem onClick={logout}> Logout of Spotify </MenuItem>
                 </Menu>
