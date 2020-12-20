@@ -169,11 +169,6 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
         setSuccess(true);
     }
 
-    // to be removed later
-    const loopOver = () => {
-        getRandomTracksFromPlaylist(access_token, '3AhUYjFT0tcC4sOJFhIkgP');
-    }
-
     return (
         <Card className={styles.card}>
             <CardHeader
@@ -186,6 +181,7 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
                 }
             />
             <CardContent>
+                {/* add loading modal to entire div prolly */}
                 <div className={styles.scrollDiv}>
                     {songData.map((track: trackData, key) =>
                         <PlaylistItem data={track}/> 

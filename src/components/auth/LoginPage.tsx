@@ -13,7 +13,6 @@ const useStyles = makeStyles ({
         margin: '0 auto',
     },
     gridBase : {
-        // todo: update colours
         backgroundColor: '#333246',
         height: '100%',
         width: '100%',
@@ -82,7 +81,6 @@ window.location.hash = "";
 // set token
 let _token = getHash.access_token;
 localStorage.setItem('access_token', _token);
-// const myToken = localStorage.getItem('token');
 
 export const Login = () =>{
 

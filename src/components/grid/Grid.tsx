@@ -35,6 +35,7 @@ export const Grid = () => {
     let lofiQuery = ["Lofi", "lofi", "lofi hip hop", "lofi beats"];
     let animeQuery = ["Tokyo", "anime", "anime ost", "jpop"];
     let angryQuery = ["Angry", "upset", "Angry breakup", "mad"];
+    let tiredQuery = ["Tired", "Exhausted", "so tired"];
 
     return(
         <div className={styles.base}>
@@ -66,7 +67,7 @@ export const Grid = () => {
                 gutterHeight={10}
                 className={styles.grid}
             >
-                <div key="key1"><MoodCard mood={btsQuery} /></div>
+                <div key="key1"><MoodCard mood={tiredQuery} /></div>
                 <div key="key2"><MoodCard mood={lofiQuery} /></div>
                 <div key="key3"><MoodCard mood={kpopQuery} /></div>
                 <div key="key4"><MoodCard mood={animeQuery} /></div>
