@@ -35,6 +35,9 @@ const useStyles = makeStyles ({
         color: '#fff',
         float: 'right',
         alignSelf: 'flex-end',
+    },
+    menuItem : {
+        transform: "translate(0,-50%)"
     }
 })
 
@@ -50,7 +53,7 @@ export const GridHeader = () => {
         getProfile(access_token);
     },[])
 
-    // profile deets
+    // profile details of user
     const getProfile = (token: any) => {
         axios({
             url: 'https://api.spotify.com/v1/me',
@@ -80,6 +83,7 @@ export const GridHeader = () => {
  
     const logout = () => {
         // TODO later
+        // send user to accounts.spotify.com/logout (?) 
         alert('logged out!');
     }
 
@@ -89,7 +93,7 @@ export const GridHeader = () => {
             <h1 className={styles.pageTitle}>Mood</h1>
             <div className={styles.pageHeaderRight}>
                 <span className="username">{`${displayName}`}</span>
-                <IconButton aria-controls="dropdown-menu" onClick={handleClick}>
+                <IconButton aria-controls="dropdown-menu" aria-haspopup="true" onClick={handleClick}>
                     <SettingsIcon/>
                 </IconButton>
                 <Menu
@@ -98,8 +102,11 @@ export const GridHeader = () => {
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
                 >
-                    {/* TODO: update dropdown styling */}
                     <MenuItem onClick={refreshSession}> Restart session </MenuItem>
                     <MenuItem onClick={logout}> Logout of Spotify </MenuItem>
                 </Menu>

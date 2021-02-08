@@ -10,7 +10,7 @@ export type trackData = {
 }
 
 // data from https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/
-// WIP -- will use these attributes later
+// WIP -- will use these attributes later to determine mood ?
 export type trackFeatures = {
     key: number, // Pitch class notation (E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1)
     mode: number, // Major is represented by 1 and minor is 0

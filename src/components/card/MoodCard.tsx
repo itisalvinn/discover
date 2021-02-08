@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import {PlaylistItem} from './PlaylistItem'
-import {getSearchResultsMood, randomIndex} from '../songUtil/SongSearch'
+import {getSearchResultsByMood, randomIndex} from '../songUtil/SongSearch'
 import {Card, makeStyles, CardHeader, IconButton, CardContent, Tooltip, Fab} from '@material-ui/core'
 import {trackData} from '../../Context'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import AddIcon from '@material-ui/icons/Add'
 import CheckIcon from '@material-ui/icons/Check'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import axios from 'axios'
+import { FullscreenExit } from '@material-ui/icons'
 
 //TODO: update card and content UI - need dis to look SECKSI
 //TODO: set 'loading' view when api is still retrieving the value so card content doesn't appear blank
@@ -47,6 +49,10 @@ const useStyles = makeStyles({
             backgroundColor: 'rgba(0,0,0,.1)',
         }
     },
+    loadingModal : {
+      display: 'flex',
+      margin: 'auto',  
+    },
     addToPlaylist : {
         display: 'flex',
         flexDirection: 'row',
@@ -72,22 +78,26 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
     const [songData, setSongData] = useState<trackData[]>([]);
     const [currPlaylistId, setCurrPlaylistId] = useState('');
     const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(true);
     const styles =  useStyles();
     const access_token = localStorage.getItem('access_token');
     var searchResults: any = [];
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         // try with async await on getSearchResultsMood
         getPlaylistCardData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // load random playlist retrieved from promise
+    /* load random playlist retrieved from promise
+     * :param: none
+     */
     const getPlaylistCardData = () => {
-        getSearchResultsMood(access_token, mood[randomIndex(0,mood.length)]).then(result => {
+        getSearchResultsByMood(access_token, mood[randomIndex(0,mood.length)]).then(result => {
             let idx = randomIndex(0, result.length);
             getRandomTracksFromPlaylist(access_token, result[idx].id);
             setCurrPlaylistId(result[idx].id);
+            setLoading(false)
         })
     }
 
@@ -137,6 +147,18 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
         });
     }
 
+    /* refresh playlist in the mood card
+     * :param: none
+     */
+    const refreshPlaylist = () => {
+        setLoading(true);
+        getPlaylistCardData();
+        // should check if user is already following the playlist first 
+        if (success){
+            setSuccess(!success);
+        }
+    }
+
     /* open playlist currently used in the mood card
      * :param: playlistId : string
      */
@@ -175,30 +197,33 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
                 title={mood[0]}
                 className={styles.cardHeader}
                 action={
-                    <IconButton onClick={()=>getPlaylistCardData()} aria-label="refresh-songs">
+                    <IconButton onClick={()=>refreshPlaylist()} aria-label="refresh-songs">
                         <RefreshIcon/>
                     </IconButton>
                 }
             />
             <CardContent>
-                {/* add loading modal to entire div prolly */}
-                <div className={styles.scrollDiv}>
-                    {songData.map((track: trackData, key) =>
-                        <PlaylistItem data={track}/> 
-                    )}
-                </div>
-                <div className={styles.addToPlaylist}>
-                    <Tooltip title="Open complete playlist on Spotify">
-                        <Fab className={styles.openPlaylistBtn} size="medium" aria-label="open-playlist">
-                            <OpenInNewIcon onClick={()=> openPlaylist(currPlaylistId)}/>
-                        </Fab>
-                    </Tooltip>
-                    <Tooltip title="Follow this playlist">
-                        <Fab className={styles.followPlaylistBtn} onClick={() => followPlaylist(access_token, currPlaylistId)} size="medium" aria-label="follow-playlist">
-                            {success ? <CheckIcon/> : <AddIcon/>}
-                        </Fab>
-                    </Tooltip>
-                </div>
+                {/* may not need loading modal consider how fast spotify api retrieves data?  */}
+                {loading && <CircularProgress className={styles.loadingModal}/>}
+                {!loading && <>
+                    <div className={styles.scrollDiv}>
+                        {songData.map((track: trackData, key) =>
+                            <PlaylistItem data={track}/> 
+                        )}
+                    </div>
+                    <div className={styles.addToPlaylist}>
+                        <Tooltip title="Open complete playlist on Spotify">
+                            <Fab className={styles.openPlaylistBtn} size="medium" aria-label="open-playlist">
+                                <OpenInNewIcon onClick={()=> openPlaylist(currPlaylistId)}/>
+                            </Fab>
+                        </Tooltip>
+                        <Tooltip title="Follow this playlist">
+                            <Fab className={styles.followPlaylistBtn} onClick={() => followPlaylist(access_token, currPlaylistId)} size="medium" aria-label="follow-playlist">
+                                {success ? <CheckIcon/> : <AddIcon/>}
+                            </Fab>
+                        </Tooltip>
+                    </div></>
+                }
             </CardContent>
         </Card>
     )

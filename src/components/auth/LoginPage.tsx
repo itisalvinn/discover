@@ -51,7 +51,7 @@ const useStyles = makeStyles ({
     },
 });
 
-// spotify auth variables
+// spotify auth variables for implicit grant flow
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
 const redirectUri =  process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
@@ -107,6 +107,7 @@ export const Login = () =>{
                         size="large">
                         Login to Spotify
                     </Button>
+                    {/* add screenshot of app on RHS? */}
                 </Container>
             </div>)}
 

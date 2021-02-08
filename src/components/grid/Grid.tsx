@@ -26,6 +26,7 @@ export const Grid = () => {
 
     const styles = useStyles(); 
 
+    // arbitary list of moods
     let happyQuery = ["Happy", "feel good", "happiness", "celebration"];
     let sadQuery = ["Sad", "crying", "melancholy", "sorrow"];
     let peaceQuery = ["Peaceful", "peace", "quiet", "calming", "piano"];
@@ -36,9 +37,11 @@ export const Grid = () => {
     let animeQuery = ["Tokyo", "anime", "anime ost", "jpop"];
     let angryQuery = ["Angry", "upset", "Angry breakup", "mad"];
     let tiredQuery = ["Tired", "Exhausted", "so tired"];
+    let ghibliQuery = ["studio ghibli", "ghibli", "best of ghibli"]
 
     return(
         <div className={styles.base}>
+            {/* potentially remove stack grid usage (?) */}
             <StackGrid
                 columnWidth="25%"
                 gutterWidth={20}

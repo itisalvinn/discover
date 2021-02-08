@@ -67,7 +67,7 @@ export const PlaylistItem = ({data} : {data: any}) => {
     }
 
     return (
-        // want to display album art, song title, artist -- data.art, data.title, data.artist, data.previewUrl
+        // display album art, song title, artist -- data.art, data.title, data.artist, data.previewUrl
         <div className={styles.itemDiv}>
             <audio ref={audioRef} src={data.pUrl}/>
             <div className={styles.artDiv}>
