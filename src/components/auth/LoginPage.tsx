@@ -3,6 +3,7 @@ import {makeStyles, Button, Container} from "@material-ui/core"
 import {Grid} from '../grid/Grid'
 import {GridHeader} from '../grid/GridHeader'
 
+// add viewport styling
 const useStyles = makeStyles ({
     loginBase : {
         backgroundColor: '#282c34',
@@ -11,6 +12,8 @@ const useStyles = makeStyles ({
         position: 'fixed',
         alignItems: 'normal',
         margin: '0 auto',
+        ['@media (max-width: 700px)']:{
+        },
     },
     gridBase : {
         backgroundColor: '#333246',
@@ -26,28 +29,47 @@ const useStyles = makeStyles ({
         paddingRight: '60px',
         marginTop: '300px',
         alignItems: 'flex-start',
+        ['@media (max-width: 700px)']:{
+            width: '100%',
+            height: '50%',
+            marginTop: '100px',
+        },
     },
     header : {
         fontSize: '3.2em',
         fontWeight: 'bold',
         marginBottom: '20px',
+        ['@media (max-width: 700px)']:{
+            fontSize: '3em',
+            marginTop: '0px',
+        },
     },
     subheader : {
         fontSize: '2em',
         fontWeight: 400,
         marginBottom: '20px',
+        ['@media (max-width: 700px)']:{
+            fontSize: '1em',
+            
+        },
     },
     me : {
         fontSize: '1em',
         fontWeight: 200,
         marginBottom: '20px',
+        ['@media (max-width: 700px)']:{
+            fontSize: '1em',
+        },
     },
     loginButton : {
         padding: '10px 30px',
         borderRadius: 30,
         '&:hover': {
             backgroundColor: '#1DB954',
-        }
+        },
+        ['@media (max-width: 700px)']:{
+            fontSize: '1em',
+        },
     },
 });
 

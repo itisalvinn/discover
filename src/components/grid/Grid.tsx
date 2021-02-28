@@ -38,7 +38,8 @@ export const Grid = () => {
     let angryQuery = ["Angry", "upset", "Angry breakup", "mad"];
     let tiredQuery = ["Tired", "Exhausted", "so tired"];
     let ghibliQuery = ["studio ghibli", "ghibli", "best of ghibli"]
-
+    
+    // TODO: mobile view - 1 card width w/ scroll bar
     return(
         <div className={styles.base}>
             {/* potentially remove stack grid usage (?) */}
