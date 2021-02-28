@@ -9,7 +9,6 @@ import CheckIcon from '@material-ui/icons/Check'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import axios from 'axios'
-import { FullscreenExit } from '@material-ui/icons'
 
 //TODO: update card and content UI - need dis to look SECKSI
 //TODO: set 'loading' view when api is still retrieving the value so card content doesn't appear blank
@@ -21,6 +20,7 @@ const useStyles = makeStyles({
         display: 'block',
         backgroundColor: '#c9ada7',
         width: '95%',
+        // width: '25%',
         height: '410px',
     },
     cardHeader : {

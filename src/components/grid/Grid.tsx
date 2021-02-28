@@ -1,9 +1,10 @@
 import React from 'react'
 import StackGrid from 'react-stack-grid'
+import {SizeMe} from 'react-sizeme'
 import {makeStyles} from '@material-ui/core'
 import {MoodCard} from '../card/MoodCard'
 
-// redesign grid to use hexagons / diamonds?
+// redesign grid to use hexagons ?
 // on hover, border glow
 // use darker colour scheme 
 
@@ -19,7 +20,7 @@ const useStyles = makeStyles ({
         margin: '10 10',
         color: '#FFFFF',
         height: '30%',
-    }
+    },
 })
 
 export const Grid = () => {
@@ -42,9 +43,9 @@ export const Grid = () => {
     // TODO: mobile view - 1 card width w/ scroll bar
     return(
         <div className={styles.base}>
-            {/* potentially remove stack grid usage (?) */}
+            {/* potentially remove stack grid usage cause it does not resize dynamically (?) or fix react-sizeme */}
             <StackGrid
-                columnWidth="25%"
+                columnWidth={window.innerWidth < 700 ? '100%' : '25%'}
                 gutterWidth={20}
                 gutterHeight={10}
                 className={styles.grid}
@@ -55,7 +56,7 @@ export const Grid = () => {
                 <div key="key4" className={styles.item}><MoodCard mood={hypeQuery}/></div>
             </StackGrid>
             <StackGrid
-                columnWidth="25%"
+                columnWidth={window.innerWidth < 700 ? '100%' : '25%'}
                 gutterWidth={25}
                 gutterHeight={10}
                 className={styles.grid}
@@ -65,18 +66,6 @@ export const Grid = () => {
                 <div key="key3"><MoodCard mood={kpopQuery} /></div>
                 <div key="key4"><MoodCard mood={angryQuery} /></div>
             </StackGrid>
-            {/* <StackGrid
-                columnWidth="25%"
-                gutterWidth={25}
-                gutterHeight={10}
-                className={styles.grid}
-            >
-                <div key="key1"><MoodCard mood={tiredQuery} /></div>
-                <div key="key2"><MoodCard mood={lofiQuery} /></div>
-                <div key="key3"><MoodCard mood={kpopQuery} /></div>
-                <div key="key4"><MoodCard mood={animeQuery} /></div>
-            </StackGrid> */}
         </div>
-
     )
 }
