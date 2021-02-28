@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import StackGrid from 'react-stack-grid'
-import {SizeMe} from 'react-sizeme'
 import {makeStyles} from '@material-ui/core'
 import {MoodCard} from '../card/MoodCard'
+import {getWindowSize} from '../songUtil/SongSearch'
 
 // redesign grid to use hexagons ?
 // on hover, border glow
@@ -25,7 +25,13 @@ const useStyles = makeStyles ({
 
 export const Grid = () => {
 
+    const [width, setWidth] = useState(0);
     const styles = useStyles(); 
+
+    // fix use effect to dynamically resize on change
+    useEffect(() => {
+        setWidth(getWindowSize())
+    })
 
     // arbitary list of moods
     let happyQuery = ["Happy", "feel good", "happiness", "celebration"];
@@ -43,9 +49,10 @@ export const Grid = () => {
     // TODO: mobile view - 1 card width w/ scroll bar
     return(
         <div className={styles.base}>
+            <span>{width}</span>
             {/* potentially remove stack grid usage cause it does not resize dynamically (?) or fix react-sizeme */}
             <StackGrid
-                columnWidth={window.innerWidth < 700 ? '100%' : '25%'}
+                columnWidth={width < 700 ? '100%' : '25%'}
                 gutterWidth={20}
                 gutterHeight={10}
                 className={styles.grid}
@@ -56,7 +63,7 @@ export const Grid = () => {
                 <div key="key4" className={styles.item}><MoodCard mood={hypeQuery}/></div>
             </StackGrid>
             <StackGrid
-                columnWidth={window.innerWidth < 700 ? '100%' : '25%'}
+                columnWidth={width < 700 ? '100%' : '25%'}
                 gutterWidth={25}
                 gutterHeight={10}
                 className={styles.grid}
@@ -66,6 +73,9 @@ export const Grid = () => {
                 <div key="key3"><MoodCard mood={kpopQuery} /></div>
                 <div key="key4"><MoodCard mood={angryQuery} /></div>
             </StackGrid>
+            <div id="grid">
+                <div className="grid-item"></div>
+            </div>
         </div>
     )
 }

@@ -10,9 +10,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import axios from 'axios'
 
-//TODO: update card and content UI - need dis to look SECKSI
-//TODO: set 'loading' view when api is still retrieving the value so card content doesn't appear blank
-//TODO: add transparent scroll bar
+//TODO: update card and content UI - need dis to look GUDD
 // test playlist ID = 3AhUYjFT0tcC4sOJFhIkgP
 
 const useStyles = makeStyles({
@@ -85,12 +83,11 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        // try with async await on getSearchResultsMood
         getPlaylistCardData();
     }, [])
 
     /* load random playlist retrieved from promise
-     * :param: none
+     * 
      */
     const getPlaylistCardData = () => {
         getSearchResultsByMood(access_token, mood[randomIndex(0,mood.length)]).then(result => {
@@ -102,8 +99,8 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
     }
 
     /* add random tracks into state from a playlist
-     * :param: token : any
-     * :param: playlistId : string
+     * @param {any} token
+     * @param {string} playlistId
      */ 
     const getRandomTracksFromPlaylist = (token: any, playlistId: string) => {
         axios({
@@ -148,7 +145,7 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
     }
 
     /* refresh playlist in the mood card
-     * :param: none
+     * 
      */
     const refreshPlaylist = () => {
         setLoading(true);
@@ -160,7 +157,7 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
     }
 
     /* open playlist currently used in the mood card
-     * :param: playlistId : string
+     * @param {string} playlistId
      */
     const openPlaylist = (playlistId : string) => {
         let playlistUrl = 'https://open.spotify.com/playlist/' + playlistId;
@@ -172,8 +169,8 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
     }
 
      /* follow playlist currently used in the mood card
-      * :param: token : access_token
-      * :param: playlistId : string
+      * @param {token} access_token
+      * @param {string} playlistId
       */
     const followPlaylist = (token : any, playlistId : string) => {
         axios({

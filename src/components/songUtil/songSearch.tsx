@@ -1,6 +1,8 @@
 import axios from 'axios'
+import {useState, useEffect} from 'react'
 
-// not used atm
+/* not used atm
+*/
 export const getRandomParam = () => {
     const chars = 'abcdefghijklmnopqrstuvwxyz';
     const randChar = chars.charAt(Math.floor(Math.random() * chars.length));
@@ -18,8 +20,9 @@ export const getRandomParam = () => {
     return randSearch;
 }
 
-// not used atm
-// random number from min up to (but not equal to) max
+/* not used atm
+ * random number from min up to (but not equal to) max
+ */
 export const randomIndex = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min) + min);
 }
@@ -113,4 +116,9 @@ export const getSearchResultsByMood = (token: any, mood: string) => {
         console.log('Error', err);
     });
     return response;
+}
+
+export const getWindowSize = () => {
+    let width = window.innerWidth;
+    return width
 }
