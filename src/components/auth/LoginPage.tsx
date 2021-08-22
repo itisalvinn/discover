@@ -129,7 +129,7 @@ export const Login = () =>{
                         size="large">
                         Login to Spotify
                     </Button>
-                    {/* add screenshot of app on RHS? */}
+                    {/* add screenshot of app on RHS later */}
                 </Container>
             </div>)}
 

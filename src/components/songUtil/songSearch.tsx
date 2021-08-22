@@ -9,7 +9,7 @@ export const getRandomParam = () => {
     let randSearch = ''; 
 
     // off set because Spotify prioritizes more famous artists / tracks 
-    // look into Math.Round() as it conforms the numbers to a non-uniform distribution
+    // Math.Round() conforms numbers to a non-uniform distribution
     if(Math.round(Math.random()) > 0){
         randSearch = randChar + '%';
     } 
@@ -27,8 +27,9 @@ export const randomIndex = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-// not used atm
-// search for some random input {track, playlist, artist etc.}
+/* not used atm
+/* search for some random input {track, playlist, artist etc.}
+*/
 export const getSearchResults = (token: any) => {
     const response = axios({
         url: 'https://api.spotify.com/v1/search',
@@ -108,8 +109,6 @@ export const getSearchResultsByMood = (token: any, mood: string) => {
     .then(resp => {return resp.data})
         .then((data) =>{
             // return an array of song items
-            // console.log("items");
-            // console.log(data.playlists.items);
             return data.playlists.items;
         })
     .catch(err => {

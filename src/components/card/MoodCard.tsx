@@ -10,7 +10,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import axios from 'axios'
 
-//TODO: update card and content UI - need dis to look GUDD
+//TODO: update card and content UI
 // test playlist ID = 3AhUYjFT0tcC4sOJFhIkgP
 
 const useStyles = makeStyles({
@@ -87,7 +87,7 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
     }, [])
 
     /* load random playlist retrieved from promise
-     * 
+     * @param {none}
      */
     const getPlaylistCardData = () => {
         getSearchResultsByMood(access_token, mood[randomIndex(0,mood.length)]).then(result => {
@@ -145,7 +145,7 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
     }
 
     /* refresh playlist in the mood card
-     * 
+     * @param {none}
      */
     const refreshPlaylist = () => {
         setLoading(true);
@@ -200,7 +200,6 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
                 }
             />
             <CardContent>
-                {/* may not need loading modal consider how fast spotify api retrieves data?  */}
                 {loading && <CircularProgress className={styles.loadingModal}/>}
                 {!loading && <>
                     <div className={styles.scrollDiv}>

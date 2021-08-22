@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {makeStyles, IconButton, Menu, MenuItem} from '@material-ui/core'
+import {makeStyles, IconButton, Menu, MenuItem, Checkbox} from '@material-ui/core'
+import {AboutModal} from '../about/AboutModal'
 import SettingsIcon from '@material-ui/icons/Settings';
 import axios from 'axios'
 
@@ -45,6 +46,7 @@ export const GridHeader = () => {
     
     const [displayName, setDisplayName] = useState('');
     const [anchorEl, setAnchorEl] = useState<any>(null);
+    const [aboutVisible, setAboutVisible] = useState<boolean>(false);
 
     const styles = useStyles();
     const access_token = localStorage.getItem('access_token');
@@ -81,10 +83,9 @@ export const GridHeader = () => {
         window.location.reload(false);
     }
  
-    const logout = () => {
-        // TODO later
-        // send user to accounts.spotify.com/logout (?) 
-        alert('logged out!');
+    const toggleAbout = () => {
+        setAboutVisible(!aboutVisible);
+        alert('about project stuff');
     }
 
     return (
@@ -107,10 +108,16 @@ export const GridHeader = () => {
                         horizontal: 'right',
                     }}
                 >
-                    <MenuItem onClick={refreshSession}> Restart session </MenuItem>
-                    <MenuItem onClick={logout}> Logout of Spotify </MenuItem>
+                    <MenuItem onClick={toggleAbout}>  About this project </MenuItem>
+                    {/* <MenuItem> 
+                        <Checkbox 
+                            checked={aboutVisible}
+                            onChange={e=>{}}/> Preview Audio 
+                    </MenuItem> */}
+                    <MenuItem onClick={refreshSession}> End session </MenuItem>
                 </Menu>
             </div>
+
         </div>
     )
 }

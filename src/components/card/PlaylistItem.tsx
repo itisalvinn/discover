@@ -1,6 +1,9 @@
 import React, {useState, useRef} from 'react'
 import {makeStyles} from '@material-ui/core'
 
+// display playlist info (album art, song title, artist) within the mood card
+// TODO: add volume slider
+
 const useStyles = makeStyles({
     album : {
         width: '100px',
@@ -39,6 +42,7 @@ export const PlaylistItem = ({data} : {data: any}) => {
     const playTrack = () => {
         try {
             if(audioRef.current != null){
+                audioRef.current.volume = 0.5;
                 audioRef.current.play();
             }
             setAudioStatus(true);

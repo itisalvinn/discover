@@ -4,7 +4,7 @@ import {makeStyles} from '@material-ui/core'
 import {MoodCard} from '../card/MoodCard'
 import {getWindowSize} from '../songUtil/SongSearch'
 
-// redesign grid to use hexagons ?
+// redesign grid ?
 // on hover, border glow
 // use darker colour scheme 
 
@@ -28,7 +28,8 @@ export const Grid = () => {
     const [width, setWidth] = useState(0);
     const styles = useStyles(); 
 
-    // fix use effect to dynamically resize on change
+    /// TODO : fix use effect to dynamically resize on change
+    // TODO: mobile view - 1 card width w/ scroll bar
     useEffect(() => {
         setWidth(getWindowSize())
     })
@@ -46,10 +47,9 @@ export const Grid = () => {
     let tiredQuery = ["Tired", "Exhausted", "so tired"];
     let ghibliQuery = ["studio ghibli", "ghibli", "best of ghibli"]
     
-    // TODO: mobile view - 1 card width w/ scroll bar
     return(
         <div className={styles.base}>
-            <span>{width}</span>
+            {/* <span>{width}</span> */}
             {/* potentially remove stack grid usage cause it does not resize dynamically (?) or fix react-sizeme */}
             <StackGrid
                 columnWidth={width < 700 ? '100%' : '25%'}
