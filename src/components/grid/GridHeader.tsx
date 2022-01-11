@@ -108,7 +108,7 @@ export const GridHeader = () => {
                         horizontal: 'right',
                     }}
                 >
-                    <MenuItem onClick={toggleAbout}>  About this project </MenuItem>
+                    <MenuItem onClick={toggleAbout}> About this project </MenuItem>
                     {/* <MenuItem> 
                         <Checkbox 
                             checked={aboutVisible}
