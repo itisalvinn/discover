@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {useState, useEffect} from 'react'
 
 /* not used atm
 */
@@ -88,7 +87,7 @@ export const getSearchResults = (token: any) => {
 //     });
 // }
 
-// grab results for 10 playlists given a specific mood input
+// CURRENT USAGE : grab results for 10 playlists given a specific mood input
 export const getSearchResultsByMood = (token: any, mood: string) => {
     const response = axios({
         url: 'https://api.spotify.com/v1/search',

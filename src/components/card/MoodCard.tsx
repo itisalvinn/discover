@@ -16,21 +16,23 @@ import axios from 'axios'
 const useStyles = makeStyles({
     card : {
         display: 'block',
-        backgroundColor: '#c9ada7',
-        width: '95%',
+        backgroundColor: '#252323',
+        width: '80%',
         // width: '25%',
         height: '410px',
     },
     cardHeader : {
-        borderBottom:  '3px solid',
-        borderBottomColor: '#333246',
+        //borderBottom:  '3px solid',
+        //borderBottomColor: '#f2e9e4',
+        color: '#b8b8b8'
     },
-    headerDescription : {
-        color: 'red',
+    refreshBtn : {
+        color: '#b8b8b8'
     },
     scrollDiv : {
         width: "100%",
         height: '260px',
+        color: '#b8b8b8',
         overflowY: 'scroll',
         '&::-webkit-scrollbar': {
             width: '0.4em'
@@ -114,30 +116,31 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
         })
         .then(resp => {return resp.data.items})
             .then(data => {
-                let happySongIds = new Set(); 
+                let songIds = new Set(); 
                 for(let i = 0; i < data.length-1; i++){
                     let idx = randomIndex(0, data.length);
 
                     // because some playlists have null track id's :(
-                    if(data[idx].track.id === null){
-                        continue;
-                    }
-
-                    // add song into set given it is not 'full' and preview url exists
-                    // also b/c we don't want the user to get an empty playback
-                    if(!happySongIds.has(data[idx].track.id) && happySongIds.size < 10 && data[idx].track.preview_url != null){
-                        happySongIds.add(data[idx].track.id);
-                        searchResults.push({
-                            id: data[idx].track.id,
-                            pUrl: data[idx].track.preview_url,
-                            name: data[idx].track.name,
-                            albumArt: data[idx].track.album.images[0].url,
-                            artist: data[idx].track.artists[0].name,
-                            trackUrl: data[idx].track.external_urls.spotify,
-                        })
+                    if(data[idx].track.id != null){
+                        // add song into set given it is not 'full' and preview url exists
+                        // also b/c we don't want the user to get an empty playback
+                        if(!songIds.has(data[idx].track.id) && songIds.size < 10 && data[idx].track.preview_url != null){
+                            songIds.add(data[idx].track.id);
+                            searchResults.push({
+                                id: data[idx].track.id,
+                                pUrl: data[idx].track.preview_url,
+                                name: data[idx].track.name,
+                                albumArt: data[idx].track.album.images[0].url,
+                                artist: data[idx].track.artists[0].name,
+                                trackUrl: data[idx].track.external_urls.spotify,
+                            })
+                        }
                     }
                 }
-                setSongData(searchResults);
+
+                if(searchResults){
+                    setSongData(searchResults);
+                }
             })
         .catch(err => {
             console.log('Error', err);
@@ -191,10 +194,10 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
     return (
         <Card className={styles.card}>
             <CardHeader
-                title={mood[0]}
                 className={styles.cardHeader}
+                title={mood[0]}
                 action={
-                    <IconButton onClick={()=>refreshPlaylist()} aria-label="refresh-songs">
+                    <IconButton className={styles.refreshBtn} onClick={()=>refreshPlaylist()} aria-label="refresh-songs">
                         <RefreshIcon/>
                     </IconButton>
                 }
@@ -204,7 +207,7 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
                 {!loading && <>
                     <div className={styles.scrollDiv}>
                         {songData.map((track: trackData, key) =>
-                            <PlaylistItem data={track}/> 
+                            <PlaylistItem key={key} data={track}/> 
                         )}
                     </div>
                     <div className={styles.addToPlaylist}>

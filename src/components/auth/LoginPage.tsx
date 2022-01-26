@@ -6,7 +6,7 @@ import {GridHeader} from '../grid/GridHeader'
 // add viewport styling
 const useStyles = makeStyles ({
     loginBase : {
-        backgroundColor: '#282c34',
+        backgroundColor: '#222020',
         minHeight: '100%',
         width: '100%',
         position: 'fixed',
@@ -16,7 +16,7 @@ const useStyles = makeStyles ({
         },
     },
     gridBase : {
-        backgroundColor: '#333246',
+        backgroundColor: '#222020',
         height: '100%',
         width: '100%',
         position: 'fixed',
@@ -39,6 +39,7 @@ const useStyles = makeStyles ({
         fontSize: '3.2em',
         fontWeight: 'bold',
         marginBottom: '20px',
+        color: '#7f7f7f',
         ['@media (max-width: 700px)']:{
             fontSize: '3em',
             marginTop: '0px',
@@ -48,6 +49,7 @@ const useStyles = makeStyles ({
         fontSize: '2em',
         fontWeight: 400,
         marginBottom: '20px',
+        color: '#7f7f7f',
         ['@media (max-width: 700px)']:{
             fontSize: '1em',
             

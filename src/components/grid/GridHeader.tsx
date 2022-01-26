@@ -15,7 +15,7 @@ const useStyles = makeStyles ({
         height: '50px',
     },
     pageTitle : {
-        color: '#fff',
+        color: '#7f7f7f',
         margin: '0px 90px 10px',
         fontSize: '2.5em',
         width: '80%',
@@ -80,7 +80,7 @@ export const GridHeader = () => {
 
     const refreshSession = () => {
         localStorage.removeItem('access_token');
-        window.location.reload(false);
+        window.location.reload();
     }
  
     const toggleAbout = () => {

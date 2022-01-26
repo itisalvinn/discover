@@ -68,9 +68,9 @@ export const Grid = () => {
                 gutterHeight={10}
                 className={styles.grid}
             >
-                <div key="key1"><MoodCard mood={btsQuery} /></div>
+                <div key="key1"><MoodCard mood={tiredQuery} /></div>
                 <div key="key2"><MoodCard mood={lofiQuery} /></div>
-                <div key="key3"><MoodCard mood={kpopQuery} /></div>
+                <div key="key3"><MoodCard mood={ghibliQuery} /></div>
                 <div key="key4"><MoodCard mood={angryQuery} /></div>
             </StackGrid>
             <div id="grid">
