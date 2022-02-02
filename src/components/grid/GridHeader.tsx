@@ -3,6 +3,7 @@ import {makeStyles, IconButton, Menu, MenuItem, Checkbox} from '@material-ui/cor
 import {AboutModal} from '../about/AboutModal'
 import SettingsIcon from '@material-ui/icons/Settings';
 import axios from 'axios'
+import { render } from '@testing-library/react';
 
 // add option for coffee shop noises / rain / thunder with volume slider !!
 // create a sticky header
@@ -39,7 +40,7 @@ const useStyles = makeStyles ({
     },
     menuItem : {
         transform: "translate(0,-50%)"
-    }
+    },
 })
 
 export const GridHeader = () => {
@@ -85,7 +86,11 @@ export const GridHeader = () => {
  
     const toggleAbout = () => {
         setAboutVisible(!aboutVisible);
-        alert('about project stuff');
+        // use new page for about modal and rendering
+        return (
+            <AboutModal/>
+        )
+        alert('TODO');
     }
 
     return (
@@ -94,7 +99,7 @@ export const GridHeader = () => {
             <h1 className={styles.pageTitle}>Mood</h1>
             <div className={styles.pageHeaderRight}>
                 <span className="username">{`${displayName}`}</span>
-                <IconButton aria-controls="dropdown-menu" aria-haspopup="true" onClick={handleClick}>
+                <IconButton color='inherit' aria-controls="dropdown-menu" aria-haspopup="true" onClick={handleClick}>
                     <SettingsIcon/>
                 </IconButton>
                 <Menu
@@ -109,11 +114,6 @@ export const GridHeader = () => {
                     }}
                 >
                     <MenuItem onClick={toggleAbout}> About this project </MenuItem>
-                    {/* <MenuItem> 
-                        <Checkbox 
-                            checked={aboutVisible}
-                            onChange={e=>{}}/> Preview Audio 
-                    </MenuItem> */}
                     <MenuItem onClick={refreshSession}> End session </MenuItem>
                 </Menu>
             </div>

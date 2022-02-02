@@ -10,15 +10,13 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import axios from 'axios'
 
-//TODO: update card and content UI
-// test playlist ID = 3AhUYjFT0tcC4sOJFhIkgP
+//TODO: update card and content UI - colour contrast visibility
 
 const useStyles = makeStyles({
     card : {
-        display: 'block',
+        display: 'inline-block',
         backgroundColor: '#252323',
-        width: '80%',
-        // width: '25%',
+        width: '100%',
         height: '410px',
     },
     cardHeader : {
@@ -46,7 +44,7 @@ const useStyles = makeStyles({
             },
         },
         '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'rgba(0,0,0,.1)',
+            backgroundColor: '#b8b8b8',//'rgba(0,0,0,.1)',
         }
     },
     loadingModal : {
@@ -84,7 +82,6 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
     var searchResults: any = [];
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         getPlaylistCardData();
     }, [])
 
@@ -121,9 +118,8 @@ export const MoodCard = ({mood} : {mood : string[]}) => {
                     let idx = randomIndex(0, data.length);
 
                     // because some playlists have null track id's :(
+                    // we don't want the user to get an empty playback
                     if(data[idx].track.id != null){
-                        // add song into set given it is not 'full' and preview url exists
-                        // also b/c we don't want the user to get an empty playback
                         if(!songIds.has(data[idx].track.id) && songIds.size < 10 && data[idx].track.preview_url != null){
                             songIds.add(data[idx].track.id);
                             searchResults.push({

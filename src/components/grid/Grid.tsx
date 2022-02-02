@@ -29,7 +29,6 @@ export const Grid = () => {
     const styles = useStyles(); 
 
     /// TODO : fix use effect to dynamically resize on change
-    // TODO: mobile view - 1 card width w/ scroll bar
     useEffect(() => {
         setWidth(getWindowSize())
     })
@@ -49,7 +48,6 @@ export const Grid = () => {
     
     return(
         <div className={styles.base}>
-            {/* <span>{width}</span> */}
             {/* potentially remove stack grid usage cause it does not resize dynamically (?) or fix react-sizeme */}
             <StackGrid
                 columnWidth={width < 700 ? '100%' : '25%'}
@@ -64,7 +62,7 @@ export const Grid = () => {
             </StackGrid>
             <StackGrid
                 columnWidth={width < 700 ? '100%' : '25%'}
-                gutterWidth={25}
+                gutterWidth={20}
                 gutterHeight={10}
                 className={styles.grid}
             >
