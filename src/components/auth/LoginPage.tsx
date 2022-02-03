@@ -2,8 +2,10 @@ import React from 'react'
 import {makeStyles, Button, Container} from "@material-ui/core"
 import {Grid} from '../grid/Grid'
 import {GridHeader} from '../grid/GridHeader'
+import previewImage from '../../mood_cover.png'
 
 // add viewport styling
+// TO DO: replace image with mood1, mood2, mood3, mood4 and update song titles to be test data 
 const useStyles = makeStyles ({
     loginBase : {
         backgroundColor: '#222020',
@@ -13,6 +15,8 @@ const useStyles = makeStyles ({
         alignItems: 'normal',
         margin: '0 auto',
         ['@media (max-width: 700px)']:{
+            width: '100%',
+            height: '100%',
         },
     },
     gridBase : {
@@ -23,7 +27,7 @@ const useStyles = makeStyles ({
         overflowY: 'scroll',
     },
     content : {
-        width: '50%',
+        width: '40%',
         float: 'left',
         paddingLeft: '100px',
         paddingRight: '60px',
@@ -33,6 +37,24 @@ const useStyles = makeStyles ({
             width: '100%',
             height: '50%',
             marginTop: '100px',
+        },
+    },
+    preview : {
+        width: '60%',
+        float: 'right',
+        paddingRight: '200px',
+        marginTop: '100px',
+        alignItems: 'flex-end',
+        ['@media (max-width: 700px)']:{
+            width: '100%',
+            height: '50%',
+            marginTop: '100px',
+        },
+    },
+    previewImage : {
+        ['@media (max-width: 700px)']:{
+            width: '30%',
+            height: '30%',
         },
     },
     header : {
@@ -131,7 +153,9 @@ export const Login = () =>{
                         size="large">
                         Login to Spotify
                     </Button>
-                    {/* add screenshot of app on RHS later */}
+                </Container>
+                <Container className={styles.preview}>
+                    <img className={styles.previewImage} src={previewImage}/>
                 </Container>
             </div>)}
 
