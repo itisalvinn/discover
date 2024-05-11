@@ -33,7 +33,7 @@ const useStyles = makeStyles ({
         paddingRight: '60px',
         marginTop: '300px',
         alignItems: 'flex-start',
-        ['@media (max-width: 700px)']:{
+        '@media (max-width: 700px)':{
             width: '100%',
             height: '50%',
             marginTop: '100px',
@@ -45,14 +45,14 @@ const useStyles = makeStyles ({
         paddingRight: '200px',
         marginTop: '100px',
         alignItems: 'flex-end',
-        ['@media (max-width: 700px)']:{
+        '@media (max-width: 700px)':{
             width: '100%',
             height: '50%',
             marginTop: '100px',
         },
     },
     previewImage : {
-        ['@media (max-width: 700px)']:{
+        '@media (max-width: 700px)':{
             width: '30%',
             height: '30%',
         },
@@ -62,7 +62,7 @@ const useStyles = makeStyles ({
         fontWeight: 'bold',
         marginBottom: '20px',
         color: '#7f7f7f',
-        ['@media (max-width: 700px)']:{
+        '@media (max-width: 700px)':{
             fontSize: '3em',
             marginTop: '0px',
         },
@@ -72,7 +72,7 @@ const useStyles = makeStyles ({
         fontWeight: 400,
         marginBottom: '20px',
         color: '#7f7f7f',
-        ['@media (max-width: 700px)']:{
+        '@media (max-width: 700px)':{
             fontSize: '1em',
             
         },
@@ -81,7 +81,7 @@ const useStyles = makeStyles ({
         fontSize: '1em',
         fontWeight: 200,
         marginBottom: '20px',
-        ['@media (max-width: 700px)']:{
+        '@media (max-width: 700px)':{
             fontSize: '1em',
         },
     },
@@ -91,7 +91,7 @@ const useStyles = makeStyles ({
         '&:hover': {
             backgroundColor: '#1DB954',
         },
-        ['@media (max-width: 700px)']:{
+        '@media (max-width: 700px)':{
             fontSize: '1em',
         },
     },
