@@ -2,6 +2,9 @@
 
 A Web app created with **React** and **TypeScript**, retrieving data through Spotify's Web API. 
 
+<img src="src/mood_cover.png" alt="mood cover" width="700"/>
+
+
 ## Getting Started
 
 ### 0. Prerequisites : 
